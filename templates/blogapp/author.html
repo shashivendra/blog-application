@@ -1,0 +1,12 @@
+<h2>Author nname</h2>
+     <form method="POST" action="{% url 'add_name' %}">
+        {% csrf_token %}
+
+      <label>Author Name</label>
+      <input type="text" class="form-control" name = "author_name">
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+  </form>
+
+  

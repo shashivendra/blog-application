@@ -1,0 +1,48 @@
+<!-- addblog.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Blog</title>
+</head>
+<body>
+    <h2>Add Blog</h2>
+    <form method="POST" action="{% url 'add_blog' %}">
+        {% csrf_token %}
+        
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" class="form-control"><br><br>
+        
+        <label for="content">Content:</label><br>
+        <textarea id="content" name="content" class="form-control"></textarea><br><br>
+        
+        <label>Choose Category:</label><br>
+        <select id="category" name="category" class="form-control">
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select><br><br>
+        
+        <label for="status">Choose Status:</label><br>
+        <select id="status" name="status" class="form-control">
+            <option value="savedraft">Save Draft</option>
+            <option value="publish">Publish</option>
+        </select><br><br>
+
+
+        <label for="author_name">Author Name</label>
+
+   <select id="author_name" name="author_name">
+
+    {% for authorname in authors  %}
+  <option value="{{authorname.id}}">{{ authorname.author_name }}</option>
+  {% endfor %}
+       </select><br><br><br>
+        
+        <button type="submit" class="btn btn-primary">Post Blog</button>
+    </form>
+</body>
+</html>
+

@@ -1,0 +1,14 @@
+<h3>Comment</h3>
+
+<form method = "POST" action = {% url 'add_comment' %}>
+    {% csrf_token %}
+<label>Name :</label>
+<input type ="text" name = 'name'></input><br><br>
+<label>Email :</label>
+<input type ="Email" name = 'email'></input><br><br>
+<label>Message :</label>
+<input type ="textarea" name = 'message'></input><br><br>
+
+<button type="submit" class="btn btn-primary">Post A Comment</button>
+</form>
+
