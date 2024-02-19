@@ -12,10 +12,11 @@ class Category(models.Model):
         return self.name
 
 class Post(models.Model):
-    title = models.CharField(max_length=100, name= "title" , null="True")
+    title = models.CharField(max_length=100, name= "title" , null=True)
+    blog_banner = models.ImageField(upload_to='blog_banners/')
     content = models.TextField()
     category =models.ForeignKey("Category", on_delete=models.CASCADE)
-    author_name =models.ForeignKey("Author", on_delete=models.CASCADE , null= "True")
+    author_name =models.ForeignKey("Author", on_delete=models.CASCADE , null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     STATUS_CHOICES = (('draft', 'Save Draft'), ('published', 'Published'))
@@ -32,7 +33,7 @@ class Author(models.Model):
      return self.author_name 
  
 class Comment(models.Model):
-    post =models.ForeignKey("Post", on_delete =models.CASCADE, null ="True")
+    post =models.ForeignKey("Post", on_delete =models.CASCADE, null=True)
     name =models.CharField(max_length =100)
     email =models.CharField(max_length =200)
     message =models.TextField()
