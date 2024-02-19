@@ -30,6 +30,7 @@ def addblog(request):
     if request.method == "POST":
         
         title = request.POST.get('title')
+        blog_banner = request.FILES.get('blog_banner')
         content = request.POST.get('content')
         status = request.POST.get('status')
         category_id = request.POST.get('category')
@@ -37,7 +38,7 @@ def addblog(request):
         author_id =request.POST.get('author_name')
         author_object =Author.objects.get(id=author_id)
         
-        post = Post.objects.create(title=title, content=content, category=category_object, author_name =author_object, status=status)
+        post = Post.objects.create(title=title, blog_banner=blog_banner, content=content, category=category_object, author_name =author_object, status=status)
         return redirect('/post-list')
     
     context={
