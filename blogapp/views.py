@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from .models import Category, Post, Author, Comment
+from django.core.paginator import Paginator
   
   
 def home(request):
@@ -50,13 +51,20 @@ def addblog(request):
         
 def post_list(request):
     
-    
-    context ={
-        
-        'posts':Post.objects.all()
-        
-    }
-    return render(request, 'blogapp/post_list.html', context)
+    all_posts = Post.objects.all()  
+    posts_per_page = 3
+
+    # Paginator object
+    paginator = Paginator(all_posts, posts_per_page)
+
+    # Get the current page number from the URL query parameters
+    page_number = request.GET.get('page')
+
+    # Get the posts for the requested page
+    page_obj = paginator.get_page(page_number)
+
+    # Render the template with the paginated posts
+    return render(request, 'blogapp/post_list.html', {'page_obj': page_obj})
 
 
 def post_detail(request, post_detail_id):
