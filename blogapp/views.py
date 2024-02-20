@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from .models import Category, Post, Author, Comment
 from django.core.paginator import Paginator
+from django.db.models import Q
   
   
 def home(request):
@@ -50,8 +51,13 @@ def addblog(request):
 
         
 def post_list(request):
-    
+    search_query = request.GET.get('q')
     all_posts = Post.objects.all()  
+    if search_query:
+        posts = all_posts.filter(
+            Q(title=search_query) | 
+            Q(content=search_query)
+        )
     posts_per_page = 3
 
     # Paginator object

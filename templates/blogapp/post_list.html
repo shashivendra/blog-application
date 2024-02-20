@@ -15,6 +15,16 @@
         <h1>Blog List</h1>
         <p>Learn Python | Explore himself</p>
     </div>
+
+     <!-- Search Form -->
+     <div class="container mt-5">
+        <form method="GET" action="{% url 'post_list' %}">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search for posts..." name="q" value="{{ request.GET.q }}">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </form>
+    </div>
         
     <div class="container">
         <div class="row">
