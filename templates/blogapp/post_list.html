@@ -14,20 +14,22 @@
     <div class="container-fluid p-5 bg-primary text-white text-center">
         <h1>Blog List</h1>
         <p>Learn Python | Explore himself</p>
+       <a href = {% url 'add_blog' %}><h4 style="color:white;">Add New Blog</h4></a>
+        <div class='container-fluid'>
+            <form method="GET" action="{% url 'post_list' %}">
+               <input type="text" name="query" id ="query" placeholder="Search Your Query">
+               <button type="submit">Search</button>
+           </form>
+       </div>
     </div>
+     
+    {% if search_query %}
+    <p>Search results for: <strong>{{ search_query }}</strong></p>
+    {% endif %}
 
-     <!-- Search Form -->
-     <div class="container mt-5">
-        <form method="GET" action="{% url 'post_list' %}">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search for posts..." name="q" value="{{ request.GET.q }}">
-                <button class="btn btn-outline-secondary" type="submit">Search</button>
-            </div>
-        </form>
-    </div>
-        
+
     <div class="container">
-        <div class="row">
+        <div class"row">
             <div class="col">
         {% for postvalue in page_obj %}
             <li><a href="{% url 'post_detail' postvalue.id %}">{{ postvalue.title }}</a></li><br>
@@ -35,8 +37,9 @@
             {% if postvalue.blog_banner %}       
                 <img src='{{ postvalue.blog_banner.url }}' class="rounded" alt="Cinque Terre" width="300px" height="200px"> 
             {% endif %} 
-            <p>{{ postvalue.content }}</p>  
+            <p>{{ postvalue.content| truncatechars:50 }}</p>  
         {% endfor %} 
+            </div>
     </div> 
 </div></div>
 

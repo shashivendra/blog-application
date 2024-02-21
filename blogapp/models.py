@@ -1,6 +1,9 @@
 from django.db import models
 from django.db.models import Model
 
+class User(models.Model):
+    pass
+
 
 class Category(models.Model):
     

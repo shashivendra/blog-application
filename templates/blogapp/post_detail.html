@@ -11,6 +11,7 @@
     
 </head>
 <body>
+    <div class="container">
     
     <h4>{{post.id}} : {{ post.title }}</h4>
     {% if post.blog_banner %}
@@ -20,11 +21,21 @@
     <p>{{post.content}}</p>
     <p>Status : {{post.status}}</p>
     
-    
-</body>
-</html>
-
 <br><br>
+
+<h3>Add a Comment</h3>
+    <form method="post">
+        {% csrf_token %}
+        <label for="id_name">Name:</label>
+        <input type="text" id="id_name" name="name"><br>
+        <label for="id_email">Email:</label>
+        <input type="email" id="id_email" name="email"><br>
+        <label for="id_message">Message:</label><br>
+        <textarea id="id_message" name="message" rows="4" cols="50"></textarea><br>
+      <button type="submit" class="btn btn-primary">Post A Comment</button>
+
+</form>
+
 <h3>Comments</h3>
     {% if comments %}
         <ul>
@@ -41,20 +52,9 @@
         <p>No comments yet.</p>
     {% endif %}<br>
 
-    <a href="{% url 'add_blog' %}">Add New Blog</a><br><br>
+    <a href="{% url 'add_blog' %}">Add New Blog</a><br>
     <a href="{% url 'post_list' %}">Blog List</a>
-
-
-    <h3>Add a Comment</h3>
-    <form method="post">
-        {% csrf_token %}
-        <label for="id_name">Name:</label>
-        <input type="text" id="id_name" name="name"><br>
-        <label for="id_email">Email:</label>
-        <input type="email" id="id_email" name="email"><br>
-        <label for="id_message">Message:</label><br>
-        <textarea id="id_message" name="message" rows="4" cols="50"></textarea><br>
-      <button type="submit" class="btn btn-primary">Post A Comment</button>
-
-</form>
-
+<div>
+   
+</body>
+</html>

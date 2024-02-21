@@ -1,34 +1,33 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,HttpResponse
 from django.shortcuts import get_object_or_404
 from .models import Category, Post, Author, Comment
 from django.core.paginator import Paginator
 from django.db.models import Q
   
   
-def home(request):
+# def home(request):
     
-    context = {
-        'categories':Category.objects.all()
-    }
+#     context = {
+#         'categories':Category.objects.all()
+#     }
 
-    return render(request, 'blogapp/home.html', context)
+#     return render(request, 'blogapp/home.html', context)
    
 
-def savequiry(request):
-    context = {
-        'categories': Category.objects.all()
-    }
+# def savequiry(request):
+#     context = {
+#         'categories': Category.objects.all().order_by('-created_at')
+#     }
 
-    if request.method == "POST":
-        name = request.POST.get('name')
-        en = Category.objects.create(name=name)
+#     if request.method == "POST":
+#         name = request.POST.get('name')
+#         en = Category.objects.create(name=name)
         
-    return render(request, 'blogapp/home.html', context)
-       
+#     return render(request, 'blogapp/home.html', context)
+
 
 def addblog(request):
 
-    
     if request.method == "POST":
         
         title = request.POST.get('title')
@@ -51,26 +50,25 @@ def addblog(request):
 
         
 def post_list(request):
-    search_query = request.GET.get('q')
-    all_posts = Post.objects.all()  
+    search_query = request.GET.get('query')
     if search_query:
-        posts = all_posts.filter(
-            Q(title=search_query) | 
-            Q(content=search_query)
+        all_posts = Post.objects.filter(
+            Q(title__icontains=search_query) | 
+            Q(content__icontains=search_query)|
+            Q(category__name__icontains=search_query)|
+            Q(author_name__author_name__icontains=search_query)
+            
         )
+    else:
+        all_posts = Post.objects.all().order_by('-created_at')
+    
     posts_per_page = 3
-
-    # Paginator object
     paginator = Paginator(all_posts, posts_per_page)
-
-    # Get the current page number from the URL query parameters
     page_number = request.GET.get('page')
-
-    # Get the posts for the requested page
     page_obj = paginator.get_page(page_number)
 
-    # Render the template with the paginated posts
-    return render(request, 'blogapp/post_list.html', {'page_obj': page_obj})
+    return render(request, 'blogapp/post_list.html', {'page_obj': page_obj, 'search_query': search_query})
+
 
 
 def post_detail(request, post_detail_id):
@@ -121,11 +119,16 @@ def blog_comment(request):
         en =Comment.objects.create(name =name, email =email, message = message)
         
     return render(request, 'blogapp/comment.html', context)
+
+
+
+
+
+
         
-        
-        
-        
-        
+
+
+
     
     
     
