@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import Category, Post, Author, Comment
+from .models import Category, Post, Author, Comment, Candidate
+
+
+class CandidateAdmin(admin.ModelAdmin):
+    list_display=('username', 'password', 'name', 'cnf_password')
+    list_filter=('username', 'password', 'name')
+    search_fields=('username', 'name')
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -25,8 +31,8 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ('name', 'email', 'post__title', 'message')
     list_filter = ('post',) 
 
-
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(Candidate, CandidateAdmin)
