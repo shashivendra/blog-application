@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Please Fill The Registration Form</title>
+</head>
+<body> 
+
+    {% if user_status == 1 %}
+    <h5>User is already exist</h5>
+    {% endif %}
+
+    {% if user_status == 2 %}
+    <h5>password do not match !! please try again </h5>
+    {% endif %}
+
+    {% if user_status == 3 %}
+    <h5>Form Successfully submitted </h5>
+    {% endif %}
+
+    <h2>Please Fill The Registration Form</h2>
+    
+    <form method="POST" action="{% url 'sign_up' %}">   
+        {% csrf_token %}
+        <label>User Name <label><br>
+        <input type="text" name= "username" autocomplete="off"><br>
+
+        <label> Password </label><br>
+        <input type="password" name= "password" autocomplete="off"><br>
+
+        <label> Confirm Password </label><br>
+        <input type="password" name= "cnf_password"><br>
+
+        <label> Name </label><br>
+        <input type="text" name= "name"><br>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+       
+        </form><br><br>
+
+        Already have an account , <a href="{% url 'login' %}">Login</a>
+
+    </body>
+</html>
