@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect,HttpResponse
+# from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
-from .models import Category, Post, Author, Comment
+from .models import Category, Post, Author, Comment,Candidate
 from django.core.paginator import Paginator
 from django.db.models import Q
-  
-  
+from django.contrib import messages
+
+
+# from django.contrib.auth import authenticate, login
 # def home(request):
     
 #     context = {
@@ -25,7 +28,49 @@ from django.db.models import Q
         
 #     return render(request, 'blogapp/home.html', context)
 
+def Welcome(request):
+    return render(request, 'blogapp/welcome.html')
 
+def SignUp_Form(request):
+    user_status=0
+    if request.method == "POST":
+        username=request.POST.get('username')
+        
+        password=request.POST.get('password')
+        confirm_password= request.POST.get('cnf_password')
+        name=request.POST.get('name')
+        
+        if (Candidate.objects.filter(username=username)).exists():
+            user_status = 1
+        elif password != confirm_password:
+            user_status = 2
+        else:
+            Candidate.objects.create(username=username, password=password, cnf_password=confirm_password, name=name)
+            user_status =3 
+                     
+    return render(request, 'blogapp/signup.html', {'user_status':user_status})
+
+
+def login(request):
+    user_profile =0
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = Candidate.objects.filter(username=username, password=password)
+        if user:
+            return redirect('/dashboard')
+        else:
+            user_profile = 4
+  
+    return render(request, 'blogapp/login.html', {'user_profile':user_profile})
+
+        
+def dashboard(request):
+     return render(request, 'blogapp/dashboard.html')                
+  
+def logoutView(request):
+  pass          
+        
 def addblog(request):
 
     if request.method == "POST":
