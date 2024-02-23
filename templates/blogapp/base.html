@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Welcome To My Blog Application{% endblock %}</title>
+</head>
+<body>
+
+    <div class="top">
+        <div class="sitename">
+            <h2>Journey through Thoughts: Crafting Ideas into Words</h2>
+        </div>
+        <div class="menu">
+            {% block top %}
+                
+            {% endblock %}
+        </div>
+    </div>
+
+</body>
+</html>
